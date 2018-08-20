@@ -6,4 +6,9 @@ contract Sample {
   function setValue(uint value_) public {
     value = value_;
   }
+
+  function setRandomValue() public {
+    // Totally random!
+    value = 21;
+  }
 }

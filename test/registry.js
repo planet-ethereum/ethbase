@@ -5,7 +5,7 @@ contract('Registry', async () => {
   it('should register event', async () => {
     let instance = await Registry.deployed()
     let sample = await Sample.deployed()
-    let hex = web3.sha3('setValue(uint256)')
+    let hex = web3.sha3('setRandomValue()')
 
     await instance.register('Transfer', sample.address, hex)
   })

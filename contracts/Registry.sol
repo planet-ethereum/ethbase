@@ -27,6 +27,6 @@ contract Registry {
    */
   function invoke(bytes32 event_) public {
     Subscriber storage s = subscribers[event_];
-    require(s.account.call(s.method, 21));
+    require(s.account.call(s.method));
   }
 }
