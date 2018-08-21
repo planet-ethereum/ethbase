@@ -146,7 +146,7 @@ contract('Registry: multiple subscribers', async () => {
   before(async () => {
     instance = await Registry.deployed()
     sub1 = await Subscriber.deployed()
-    sub2 = await Subscriber.new()
+    sub2 = await Subscriber.new(instance.address)
   })
 
   it('should subscribe both contracts', async () => {

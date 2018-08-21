@@ -3,7 +3,8 @@ const Emitter = artifacts.require("./example/Emitter.sol");
 const Registry = artifacts.require("./Registry.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Subscriber);
   deployer.deploy(Emitter);
-  deployer.deploy(Registry);
+  deployer.deploy(Registry).then((instance) => {
+    return deployer.deploy(Subscriber, instance.address);
+  })
 };
