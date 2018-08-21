@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-contract Sample {
+contract Subscriber {
   uint public value = 0;
   bytes32 public text;
 

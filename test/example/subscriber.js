@@ -1,16 +1,18 @@
-const Sample = artifacts.require('Sample.sol')
+const Subscriber = artifacts.require('Subscriber.sol')
 
-contract('Sample', async () => {
+contract('Subscriber', async () => {
+  let instance
+
+  before(async () => {
+    instance = await Subscriber.deployed()
+  })
+
   it('should have default value', async () => {
-    let instance = await Sample.deployed()
-
     let val = await instance.value()
     assert.equal(val, '0')
   })
 
   it('should set new value', async () => {
-    let instance = await Sample.deployed()
-
     await instance.setValue(5)
     let val = await instance.value()
 
@@ -18,7 +20,6 @@ contract('Sample', async () => {
   })
 
   it('should set new values', async () => {
-    let instance = await Sample.deployed()
     let hex = web3.sha3('test')
 
     await instance.setValues(6, hex)

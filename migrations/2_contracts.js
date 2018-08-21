@@ -1,7 +1,9 @@
-const Sample = artifacts.require("./Sample.sol");
+const Subscriber = artifacts.require("./example/Subscriber.sol");
+const Emitter = artifacts.require("./example/Emitter.sol");
 const Registry = artifacts.require("./Registry.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Sample);
+  deployer.deploy(Subscriber);
+  deployer.deploy(Emitter);
   deployer.deploy(Registry);
 };
