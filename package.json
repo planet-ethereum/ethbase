@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/planet-ethereum/call-me#readme",
   "devDependencies": {
+    "ethereumjs-abi": "^0.6.5",
     "truffle": "^4.1.14"
   }
 }

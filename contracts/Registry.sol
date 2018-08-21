@@ -2,6 +2,8 @@ pragma solidity ^0.4.24;
 
 
 contract Registry {
+  event Subscribed(bytes32 event_, address account, bytes4 method);
+
   struct Subscriber {
     address account;
     bytes4 method;
@@ -19,14 +21,17 @@ contract Registry {
     Subscriber storage s = subscribers[event_];
     s.account = account_;
     s.method = method_;
+
+    emit Subscribed(event_, account_, method_);
   }
 
   /**
    * @dev Invokes all contracts which have subscribed to an event.
    * @param event_ Name of the event.
+   * @param args_ ABI encoded arguments for the method
    */
-  function invoke(bytes32 event_) public {
+  function invoke(bytes32 event_, bytes args_) public {
     Subscriber storage s = subscribers[event_];
-    require(s.account.call(s.method));
+    require(s.account.call(s.method, args_));
   }
 }
