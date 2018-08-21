@@ -1,0 +1,25 @@
+{
+  "name": "call-me",
+  "version": "0.1.0",
+  "description": "Ethereum on-chain event subscription",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npx truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/planet-ethereum/call-me.git"
+  },
+  "author": "Sina Mahmoodi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/planet-ethereum/call-me/issues"
+  },
+  "homepage": "https://github.com/planet-ethereum/call-me#readme",
+  "devDependencies": {
+    "truffle": "^4.1.14"
+  }
+}
