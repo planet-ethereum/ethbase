@@ -26,7 +26,7 @@ Now to the flow:
 
 1. Devloper which requires event handling logic, estimates the gas required for executing his callback function.
 Then calls the `addEntry` and lists:
-   * which event he is intrested in
+   * which event he is interested in
    * which callback function should be invoked upon recieving that event.
    * Funds as he see fit to invoke the callback function.
      * Those should include (the invokation gas + a bounty to incentivize miners to publish events mined) * initial number of times he wishes that eventHandling to take place.
@@ -37,7 +37,7 @@ Then calls the `addEntry` and lists:
 5. Upon successful varification, the registery invokes the callback function of all the subscribers that are listed for `E`, using capital from their registry balances (mapping (2)).
 6. Regisgtry invokes `rewardMiner` transferring all the bounties from the above subscribers to `M`.
 
-**_Note, it is up for the subscriber contract to validate his funds at the registry and update them accordingly to meet his needs._**
+**_Note, it is up for the subscriber contract to validate its funds at the registry and update them accordingly to meet its needs._**
 
 ## Usage
 In the given [example](contracts/example), we have an `Emitter` contract, which emits `Transfer(uint256)` when its method is called. We want our `Subscriber` contract to update its state, whenever `Transfer` is emitted. This can be done, by subscribing to the registry, and specifying events and their callback methods. Afterwards, any user who's running an Ethereum client, upon seeing a `Transfer` event, can call `invoke` on `Registry`, which would in turn invoke `Subscriber`'s specified method. Of course, this manual invocation is not practical. In future, there could be a daemon which listens to events, invoking methods automatically, and smart contracts that subscribe would pay a small fee per event invocation.
