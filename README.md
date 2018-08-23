@@ -10,7 +10,7 @@ The aim of this project is to provide a mechanism for enabling smart contracts t
 
 #### The registry holds two main structs:
 
-1. Mapping `(emittingEventContractAddress, eventType)` =`(subscriberEventContractAddress, functionToBeInvoked, invokationBounty)`
+1. Mapping `(emittingEventContractAddress, eventType)` => `(subscriberEventContractAddress, functionToBeInvoked, invokationBounty)`
 2. Mapping `eventSubscriberContract` => `balanceOfSubscriberContract`
 
 #### The registry contains (at least) the following functions:
