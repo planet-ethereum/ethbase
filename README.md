@@ -1,4 +1,6 @@
 # Call Me
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/planet-ethereum/Lobby)
+
 The aim of this project is to provide a mechanism for enabling smart contracts to subscribe to events emitted in other contracts. For a short description of the why and how of this project, you can refer to the [about](https://github.com/planet-ethereum/call-me/wiki/About) wiki page.
 
 *Note:* Call Me is currently very early stage, use at own risk!
