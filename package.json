@@ -1,5 +1,5 @@
 {
-  "name": "call-me",
+  "name": "ethbase",
   "version": "0.1.0",
   "description": "Ethereum on-chain event subscription",
   "main": "truffle-config.js",
@@ -12,16 +12,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/planet-ethereum/call-me.git"
+    "url": "git+https://github.com/planet-ethereum/ethbase.git"
   },
   "author": "Sina Mahmoodi",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/planet-ethereum/call-me/issues"
+    "url": "https://github.com/planet-ethereum/ethbase/issues"
   },
-  "homepage": "https://github.com/planet-ethereum/call-me#readme",
+  "homepage": "https://github.com/planet-ethereum/ethbase#readme",
   "devDependencies": {
     "ethereumjs-abi": "^0.6.5",
+    "standard": "^12.0.0",
     "truffle": "^5.0.0-beta.0"
   },
   "dependencies": {
