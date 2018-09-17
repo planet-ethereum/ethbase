@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "bignumber.js": "^7.2.1",
+    "openzeppelin-solidity": "^1.12.0",
+    "solidity-rlp": "^1.0.1",
     "truffle-contract": "^4.0.0-beta.0",
     "web3": "^1.0.0-beta.35"
   }
