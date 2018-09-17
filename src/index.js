@@ -1,10 +1,11 @@
 const Web3 = require('web3')
 const Contract = require('truffle-contract')
-const ABI = require('ethereumjs-abi')
 
 const RegistryContract = require('../build/contracts/Registry.json')
 const EmitterContract = require('../build/contracts/Emitter.json')
 const SubscriberContract = require('../build/contracts/Subscriber.json')
+
+const Miner = require('./miner')
 
 const provider = new Web3.providers.WebsocketProvider('ws://127.0.0.1:8545')
 const web3 = new Web3(provider)
@@ -29,27 +30,13 @@ web3.eth.getAccounts().then(async (accounts) => {
 
   let method = web3.utils.sha3('setValue(uint256)')
   let hex = web3.utils.toHex('Transfer')
-  let eventId = ABI.soliditySHA3(['address', 'bytes32'], [Emitter.address, 'Transfer'])
-  eventId = '0x' + eventId.toString('hex')
+  console.log(method, hex)
 
   let tx = await subscriber.subscribe(Emitter.address, hex, method, { from: accounts[0] })
   console.log(tx)
 
-  emitter.Transfer({
-    fromBlock: 0
-  }).on('data', async (e) => {
-    if (e.event !== 'Transfer') {
-      return
-    }
-
-    let args = ABI.rawEncode(['uint256'], [e.args.amount])
-    args = '0x' + args.toString('hex')
-    let tx = await registry.invoke(eventId, subscriber.address, args, { from: accounts[0] })
-    let val = await subscriber.value()
-    if (!val.eq(e.args.amount)) {
-      console.error('Subscriber value different than event amount', val, e.args.amount)
-    }
-  })
+  const miner = new Miner(web3, registry, accounts[0])
+  miner.run()
 
 /*  tx = await subscriber.unsubscribe(eventId, { from: accounts[0] })*/
   /*console.log(tx)*/
