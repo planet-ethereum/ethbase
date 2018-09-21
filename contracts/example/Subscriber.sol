@@ -1,37 +1,44 @@
 pragma solidity ^0.4.24;
 
-import "../Registry.sol";
+import "../Ethbase.sol";
 
 
 contract Subscriber {
   address owner;
-  Registry registry;
+  Ethbase ethbase;
 
   uint public value = 0;
   bytes32 public text;
 
-  constructor(address registry_) public {
+  constructor(address _ethbase) public {
     owner = msg.sender;
-    registry = Registry(registry_); 
+    ethbase = Ethbase(_ethbase); 
   }
 
-  function subscribe(address emitter_, bytes32 eventName_, bytes4 method_) public {
+  /**
+   * @dev Subscribe to ethbase, and provide callback, for when a log is emitted.
+   * @param _emitter Address of event emitter contract.
+   * @param _eventTopic E.g. keccak256(ExampleEvent(type1,type2)).
+   * @param _method Callback method: bytes4(keccak256(exampleMethod(type1,type2))).
+   */
+  function subscribe(address _emitter, bytes32 _eventTopic, bytes4 _method) public {
     require(msg.sender == owner);
-    registry.subscribe(emitter_, eventName_, this, method_);
+    ethbase.subscribe(_emitter, _eventTopic, this, _method);
   }
 
-  function unsubscribe(bytes32 eventId_) public {
+  function unsubscribe(bytes32 _eventId) public {
     require(msg.sender == owner);
-    registry.unsubscribe(eventId_, this);
+    ethbase.unsubscribe(_eventId, this);
   }
 
-  function setValue(uint value_) public {
-    value = value_;
+  // Example callback function.
+  function setValue(uint _value) public {
+    value = _value;
   }
 
-  function setValues(uint value_, bytes32 text_) public {
-    value = value_;
-    text = text_;
+  function setValues(uint _value, bytes32 _text) public {
+    value = _value;
+    text = _text;
   }
 
   function setRandomValue() public {

@@ -1,6 +1,6 @@
 {
   "name": "ethbase",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ethereum on-chain event subscription",
   "main": "truffle-config.js",
   "directories": {
@@ -20,6 +20,16 @@
     "url": "https://github.com/planet-ethereum/ethbase/issues"
   },
   "homepage": "https://github.com/planet-ethereum/ethbase#readme",
+  "standard": {
+    "globals": [
+      "artifacts",
+      "contract",
+      "assert"
+    ],
+    "envs": [
+      "mocha"
+    ]
+  },
   "devDependencies": {
     "ethereumjs-abi": "^0.6.5",
     "standard": "^12.0.0",
@@ -29,7 +39,6 @@
   "dependencies": {
     "bignumber.js": "^7.2.1",
     "openzeppelin-solidity": "^1.12.0",
-    "solidity-rlp": "^1.0.1",
     "truffle-contract": "^4.0.0-beta.0",
     "web3": "^1.0.0-beta.35"
   }
