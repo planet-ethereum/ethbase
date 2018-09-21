@@ -1,10 +1,12 @@
 const Verifier = artifacts.require('Verifier.sol')
+const PatriciaTrie = artifacts.require('PatriciaTrie.sol')
 
 contract('Verifier', async () => {
   let instance
 
   before(async () => {
-    instance = await Verifier.deployed()
+    Verifier.link(PatriciaTrie)
+    instance = await Verifier.new()
   })
 
   it('should verify a proof', async () => {

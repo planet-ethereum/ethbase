@@ -1,19 +1,20 @@
+/* global web3 */
 const ABI = require('ethereumjs-abi')
 
 const Subscriber = artifacts.require('Subscriber.sol')
 const Emitter = artifacts.require('Emitter.sol')
-const Registry = artifacts.require('Registry.sol')
+const Ethbase = artifacts.require('Ethbase.sol')
 
 contract('Subscriber', async () => {
   let instance
   let emitter
-  let registry
+  let ethbase
   let eventId
 
   before(async () => {
     instance = await Subscriber.deployed()
     emitter = await Emitter.deployed()
-    registry = await Registry.deployed()
+    ethbase = await Ethbase.deployed()
   })
 
   it('should have default value', async () => {
@@ -40,19 +41,10 @@ contract('Subscriber', async () => {
   })
 
   it('should subscribe', async () => {
+    let topic = web3.sha3('Transfer(uint256)')
     let method = web3.sha3('setValue(uint256)')
-    await instance.subscribe(emitter.address, 'Transfer', method)
-    eventId = ABI.soliditySHA3(['address', 'bytes32'], [emitter.address, 'Transfer'])
+    await instance.subscribe(emitter.address, topic, method)
+    eventId = ABI.soliditySHA3(['address', 'bytes32'], [emitter.address, topic])
     eventId = '0x' + eventId.toString('hex')
-  })
-
-  it('should be invoked', async () => {
-    let encoded = ABI.rawEncode(['uint256'], [22])
-    encoded = '0x' + encoded.toString('hex')
-
-    await registry.invoke(eventId, instance.address, encoded)
-
-    let value = await instance.value()
-    assert.equal(value, '22')
   })
 })
