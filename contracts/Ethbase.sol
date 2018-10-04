@@ -2,8 +2,12 @@ pragma solidity ^0.4.24;
 
 import "./Verifier.sol";
 import "./Receipt.sol";
+import "./Block.sol";
+import "./lib/PatriciaTrie.sol";
 
-contract Ethbase is Verifier {
+contract Ethbase {
+  using Block for Block.BlockHeader;
+
   event Subscribed(bytes32 eventId, address emitter, bytes32 eventTopic, address account, bytes4 method);
 
   struct Subscriber {
@@ -15,6 +19,10 @@ contract Ethbase is Verifier {
   // Key is keccak256(emitterAddr, eventName)
   mapping(bytes32 => mapping(address => Subscriber)) subscribers;
   mapping(bytes32 => address[]) subscriberList;
+
+  // Keep track of submitted event logs to prevent re-submitting.
+  // Key: keccak256(blockHash, txId, logId)
+  mapping(bytes32 => bool) logs;
 
   modifier isSubscribed(bytes32 _eventId, address _account) {
     require(subscribers[_eventId][_account].timestamp != 0, "not subscribed");
@@ -70,12 +78,21 @@ contract Ethbase is Verifier {
     address _subscriber,
     bytes32 _eventId
   ) public isSubscribed(_eventId, _subscriber) {
+    Block.BlockHeader memory header = Block.decodeBlockHeader(_blockHeader);
+    require(header.validateHeader(), "invalid block header");
+
+    bytes32 logId = keccak256(abi.encodePacked(header.hash, _key, _logIndex));
+    require(logs[logId] == false, "log already submitted");
+
     // Verify proof
-    require(verify(_receipt, _parentNodes, _key, _blockHeader), "proof verification failed");
+    require(PatriciaTrie.verifyProof(_receipt, _parentNodes, _key, header.receiptHash), "proof verification failed");
 
-    bytes memory data = Receipt.extractLog(_receipt, _logIndex);
+    // Mark log as submitted
+    logs[logId] = true;
 
+    // Call subscriber
     Subscriber storage s = subscribers[_eventId][_subscriber];
+    bytes memory data = Receipt.extractLog(_receipt, _logIndex);
     require(_subscriber.call(s.method, data), "call to subscriber failed");
   }
 

@@ -3,6 +3,7 @@ pragma solidity ^0.4.24;
 import "./lib/PatriciaTrie.sol";
 import "./lib/RLP.sol";
 
+// Only for testing purposes
 contract Verifier {
 
   struct BlockHeader {
