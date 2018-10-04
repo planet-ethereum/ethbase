@@ -7,7 +7,7 @@ Events are submitted to the network by [relayers](https://github.com/planet-ethe
 
 *Note:* Ethbase is currently in a very early development and experimental stage, and is not suitable for production use.
 
-Rinkeby: [0xababd383f1debf1434193bb4a44e7476f3a0bd2c](https://rinkeby.etherscan.io/address/0xababd383f1debf1434193bb4a44e7476f3a0bd2c)
+Rinkeby: [0x2ccf778b371e24010b6733a377e999844bdc114a](https://rinkeby.etherscan.io/address/0x2ccf778b371e24010b6733a377e999844bdc114a)
 
 ## Usage
 In the given [example](contracts/example), we have an `Emitter` contract, which emits `Transfer(uint256)` when its method is called. We want our `Subscriber` contract to update its state, whenever `Transfer` is emitted. This can be done, by subscribing to the registry, and specifying the target event and the callback method that should be executed when the event is emitted. Afterwards, any [relayer](https://github.com/planet-ethereum/relay-network), upon seeing a `Transfer` event, can call `submitLog` on `Ethbase`, which would in turn invoke `Subscriber`'s specified method.
