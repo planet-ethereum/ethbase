@@ -1,6 +1,5 @@
 pragma solidity ^0.4.24;
 
-import "./Verifier.sol";
 import "./Receipt.sol";
 import "./Block.sol";
 import "./lib/PatriciaTrie.sol";
