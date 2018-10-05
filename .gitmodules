@@ -1,0 +1,4 @@
+[submodule "contracts/safe"]
+	path = contracts/safe
+	url = git@github.com:gnosis/safe-contracts.git
+	branch = master
