@@ -30,7 +30,7 @@ contract('Subscriber', async () => {
   })
 
   it('should set new values', async () => {
-    let hex = web3.sha3('test')
+    let hex = web3.utils.sha3('test')
 
     await instance.setValues(6, hex)
     let val = await instance.value()
@@ -41,8 +41,8 @@ contract('Subscriber', async () => {
   })
 
   it('should subscribe', async () => {
-    let topic = web3.sha3('Transfer(uint256)')
-    let method = web3.sha3('setValue(uint256)')
+    let topic = web3.utils.sha3('Transfer(uint256)')
+    let method = web3.utils.sha3('setValue(uint256)')
     await instance.subscribe(emitter.address, topic, method)
     eventId = ABI.soliditySHA3(['address', 'bytes32'], [emitter.address, topic])
     eventId = '0x' + eventId.toString('hex')

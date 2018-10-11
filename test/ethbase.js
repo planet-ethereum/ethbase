@@ -4,6 +4,7 @@ const Subscriber = artifacts.require('Subscriber.sol')
 const Emitter = artifacts.require('Emitter.sol')
 
 let emitter
+const zeroHex = web3.utils.asciiToHex('0x0')
 
 before(async () => {
   emitter = await Emitter.deployed()
@@ -20,10 +21,10 @@ contract('Ethbase: sub/unsub', async () => {
   })
 
   it('should revert if not subscribed', async () => {
-    let topic = web3.sha3('Transfer(uint256)')
-    let id = web3.sha3(emitter.address, topic)
+    let topic = web3.utils.sha3('Transfer(uint256)')
+    let id = web3.utils.sha3(emitter.address, topic)
     try {
-      await instance.submitLog('0x0', '0x0', '0x0', 0, '0x0', subscriber.address, id)
+      await instance.submitLog(zeroHex, zeroHex, zeroHex, 0, zeroHex, subscriber.address, id)
       assert.fail('Expected revert not received')
     } catch (e) {
       const revertFound = e.message.search('revert') >= 0
@@ -32,8 +33,8 @@ contract('Ethbase: sub/unsub', async () => {
   })
 
   it('should subscribe to an event', async () => {
-    let topic = web3.sha3('Transfer(uint256)')
-    let method = web3.sha3('setRandomValue()')
+    let topic = web3.utils.sha3('Transfer(uint256)')
+    let method = web3.utils.sha3('setRandomValue()')
     const tx = await instance.subscribe(emitter.address, topic, subscriber.address, method)
     eventId = tx.logs[0].args.eventId
   })
@@ -44,7 +45,7 @@ contract('Ethbase: sub/unsub', async () => {
 
   it('should revert for unsubscribed event', async () => {
     try {
-      await instance.submitLog('0x0', '0x0', '0x0', 0, '0x0', subscriber.address, eventId)
+      await instance.submitLog(zeroHex, zeroHex, zeroHex, 0, zeroHex, subscriber.address, eventId)
       assert.fail('Expected revert not received')
     } catch (e) {
       const revertFound = e.message.search('revert') >= 0
@@ -66,8 +67,8 @@ contract('Ethbase: multiple subscribers', async () => {
   })
 
   it('should subscribe both contracts', async () => {
-    let topic = web3.sha3('Transfer(uint256)')
-    let method = web3.sha3('setValue(uint256)')
+    let topic = web3.utils.sha3('Transfer(uint256)')
+    let method = web3.utils.sha3('setValue(uint256)')
 
     let tx = await instance.subscribe(emitter.address, topic, sub1.address, method)
     eventId = tx.logs[0].args.eventId
