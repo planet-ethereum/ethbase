@@ -10,6 +10,7 @@ import "./safe/contracts/SignatureValidator.sol";
 contract SafeModule is Module, SignatureValidator {
   using Block for Block.BlockHeader;
 
+  uint256 public nonce;
   mapping (bytes32 => uint256) public isExecuted;
   mapping (bytes32 => uint256) public logs;
 
@@ -51,6 +52,7 @@ contract SafeModule is Module, SignatureValidator {
   ) public {
     // Checks tx signature, and that it hasn't been executed before.
     checkTransaction(_to, _value, _data, _operation, _nonce, _signatures);
+    nonce++;
 
     // Verifies log proof, checks that this log hasn't been submitted,
     // and if not, marks the log as submitted.
