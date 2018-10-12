@@ -34,7 +34,7 @@
     "ethereumjs-abi": "^0.6.5",
     "standard": "^12.0.0",
     "truffle": "^5.0.0-beta.1",
-    "truffle-hdwallet-provider": "0.0.6"
+    "truffle-hdwallet-provider": "^1.0.0-web3one.0"
   },
   "dependencies": {
     "bignumber.js": "^7.2.1",
